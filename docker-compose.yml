@@ -1,131 +1,108 @@
 version: '3.7'
 
 networks:
-  docker-php8-network:
+  php8-network:
     driver: bridge
 
 services:
-  php:
-    build: ./docker/php
-    restart: always
-    tty: true
-    container_name: docker-php8-php
-    networks:
-      - docker-php8-network
-    ports:
-      - '9000:9000'
-    volumes:
-      - .:/home/app
-
   nginx:
     build: ./docker/nginx
-    container_name: docker-php8-nginx
+    container_name: nginx
     restart: always
     tty: true
     depends_on:
       - php
+      - redis
+      - phpmyadmin
+      - mysql-mymarket
     ports:
       - "80:80"
       - "433:433"
     volumes:
-      - .:/home/app
+      - ./www:/var/www
+      - ./logs/nginx:/var/log/nginx
     networks:
-      - docker-php8-network
+      - php8-network
 
-  #  apache:
-  #    build: ./docker/apache
-  #    restart: always
-  #    container_name: docker-php8-apache
-  #    networks:
-  #      - docker-php8-network
-  #    depends_on:
-  #      - php
-  #      - mariadb
-  #    ports:
-  #      - '80:80'
-  #      - '443:443'
-  #    volumes:
-  #      - .:/home/app
+  php:
+    build: ./docker/php
+    restart: always
+    tty: true
+    container_name: php
+    links:
+      - redis
+      - phpmyadmin
+      - mysql-mymarket
+      - mysql-catalog
+    networks:
+      - php8-network
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./www:/var/www
 
-  #  mariadb:
-  #    image: mariadb
-  #    tty: true
-  #    restart: always
-  #    container_name: docker-php8-mariadb
-  #    networks:
-  #      - docker-php8-network
-  #    ports:
-  #      - '3306:3306'
-  #    volumes:
-  #      - './docker/mysql/config/mariadb.cnf:/etc/mysql/conf.d/custom.cnf:ro'
-  #      - './docker/mysql/database:/var/lib/mysql'
-  #    environment:
-  #      - MYSQL_PASSWORD=root
-  #      - MYSQL_ROOT_PASSWORD=root
-  #      - MYSQL_DATABASE=development
+  mysql-catalog:
+    image: mysql:8.0.23
+    tty: true
+    restart: always
+    container_name: mysql-catalog
+    networks:
+      - php8-network
+    ports:
+      - '3306:3306'
+    volumes:
+      - './docker/mysql/catalog/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:ro'
+      - './docker/mysql/catalog/database:/var/lib/mysql'
+    environment:
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=catalog
 
-  #  mysql:
-  #    image: mysql:8
-  #    tty: true
-  #    restart: always
-  #    container_name: docker-php8-mysql
-  #    networks:
-  #      - docker-php8-network
-  #    ports:
-  #      - '3306:3306'
-  #    volumes:
-  #      - './docker/mysql/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:ro'
-  #      - './docker/mysql/database:/var/lib/mysql'
-  #    environment:
-  #      - MYSQL_PASSWORD=root
-  #      - MYSQL_ROOT_PASSWORD=root
-  #      - MYSQL_DATABASE=development
+  mysql-mymarket:
+    image: mysql:8.0.23
+    tty: true
+    restart: always
+    container_name: mysql-mymarket
+    networks:
+      - php8-network
+    ports:
+      - '3307:3307'
+    volumes:
+      - './docker/mysql/mymarket/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:ro'
+      - './docker/mysql/mymarket/database:/var/lib/mysql'
+    environment:
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mymarket
 
-  #  phpmyadmin:
-  #    image: library/phpmyadmin
-  #    container_name: docker-php8-phpmyadmin
-  #    tty: true
-  #    networks:
-  #      - docker-php8-network
-  #    depends_on:
-  #      - mysql
-  #      - mariadb
-  #    environment:
-  #      PMA_USER: root
-  #      PMA_PASSWORD: root
-  #      PMA_HOSTS: mysql,mariadb
-  #      PMA_PORT: 3306
-  #      PMA_ARBITRARY: 1
-  #    ports:
-  #      - '8080:80'
+  phpmyadmin:
+    image: library/phpmyadmin
+    container_name: phpmyadmin
+    tty: true
+    networks:
+      - php8-network
+    depends_on:
+      - mysql-mymarket
+      - mysql-catalog
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: root
+      PMA_HOSTS: mysql-mymarket
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - '8080:80'
 
-  #  postgres:
-  #    image: library/postgres:13-alpine
-  #    container_name: docker-php8-postgres
-  #    tty: true
-  #    restart: always
-  #    networks:
-  #      - docker-php8-network
-  #    ports:
-  #      - '5432:5432'
-  #    volumes:
-  #      - './docker/postgres:/var/lib/postgresql/data'
-  #    environment:
-  #      - POSTGRES_USER=root
-  #      - POSTGRES_PASSWORD=root
-  #      - POSTGRES_DB=development
-
-  #  redis:
-  #    image: bitnami/redis:latest
-  #    restart: always
-  #    tty: true
-  #    container_name: docker-php8-redis
-  #    volumes:
-  #      - ./docker/redis:/bitnami/redis/data
-  #    networks:
-  #      - docker-php8-network
-  #    environment:
-  #      - ALLOW_EMPTY_PASSWORD=no
-  #      - REDIS_PASSWORD=root
-  #    ports:
-  #      - '6379:6379'
+  redis:
+    image: bitnami/redis:latest
+    restart: always
+    tty: true
+    container_name: redis
+    volumes:
+      - ./docker/redis:/bitnami/redis/data
+    networks:
+      - php8-network
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '6379:6379'
