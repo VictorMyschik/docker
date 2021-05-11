@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# git clone --recurse-submodules https://github.com/VictorMyschik/mymarket.git
+
+cd mymarket
+
 # Установка прав на запись для папки с логами и загруженными файлами
 chmod -R 777 storage/
 
@@ -19,6 +23,5 @@ php artisan view:clear
 composer dump-autoload --optimize
 
 # Пересоздание БД
-mysql -h 127.0.0.1 -u root -p root
 
 
