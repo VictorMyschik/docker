@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# git clone --recurse-submodules https://github.com/VictorMyschik/mymarket.git
+git clone --recurse-submodules https://github.com/VictorMyschik/mymarket.git
 
 cd mymarket
 
@@ -21,7 +21,3 @@ php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
 composer dump-autoload --optimize
-
-# Пересоздание БД
-
-
