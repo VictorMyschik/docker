@@ -1,7 +1,5 @@
 #!/bin/bash
 
-git clone --recurse-submodules https://github.com/VictorMyschik/mymarket.git
-
 cd mymarket
 
 # Установка прав на запись для папки с логами и загруженными файлами
