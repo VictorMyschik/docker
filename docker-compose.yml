@@ -1,8 +1,10 @@
 version: '3.7'
 
 networks:
-  php8-network:
-    driver: bridge
+  frontend:
+    external:
+      name: proxy_proxy
+  backend:
 
 services:
   nginx:
@@ -10,19 +12,19 @@ services:
     container_name: nginx
     restart: always
     tty: true
+    environment:
+      - VIRTUAL_HOST=mymarket.test
     depends_on:
       - php
       - redis
       - phpmyadmin
-      - mysql-mymarket
-    ports:
-      - "80:80"
-      - "433:433"
+      - mysql-catalog
     volumes:
       - ./www:/var/www
       - ./logs/nginx:/var/log/nginx
     networks:
-      - php8-network
+      - frontend
+      - backend
 
   php:
     build: ./docker/php
@@ -32,10 +34,9 @@ services:
     links:
       - redis
       - phpmyadmin
-      - mysql-mymarket
       - mysql-catalog
     networks:
-      - php8-network
+      - backend
     ports:
       - '9000:9000'
     volumes:
@@ -48,7 +49,7 @@ services:
     restart: always
     container_name: mysql-catalog
     networks:
-      - php8-network
+      - backend
     ports:
       - '3306:3306'
     volumes:
@@ -59,32 +60,14 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=catalog
 
-# БД для спецификаций
-  mysql-mymarket:
-    image: mysql:8.0.23
-    tty: true
-    restart: always
-    container_name: mysql-mymarket
-    networks:
-      - php8-network
-    ports:
-      - '3307:3307'
-    volumes:
-      - './docker/mysql/mymarket/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:ro'
-      - './docker/mysql/mymarket/database:/var/lib/mysql'
-    environment:
-      - MYSQL_PASSWORD=root
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=mymarket
-
   phpmyadmin:
     image: library/phpmyadmin
     container_name: phpmyadmin
     tty: true
     networks:
-      - php8-network
+      - frontend
+      - backend
     depends_on:
-      - mysql-mymarket
       - mysql-catalog
     environment:
       PMA_USER: root
@@ -92,6 +75,7 @@ services:
       PMA_HOSTS: mysql-catalog
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
+      VIRTUAL_HOST: pma.mymarket.test
     ports:
       - '8080:80'
 
@@ -103,7 +87,7 @@ services:
     volumes:
       - ./docker/redis:/bitnami/redis/data
     networks:
-      - php8-network
+      - backend
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
