@@ -1,3 +1,2 @@
-# Docker com PHP 8
-
-
+To install run install.sh
+To sync run sync.sh (docker container inside)
