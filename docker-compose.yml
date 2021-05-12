@@ -41,6 +41,7 @@ services:
     volumes:
       - ./www:/var/www
 
+# БД для каталога
   mysql-catalog:
     image: mysql:8.0.23
     tty: true
@@ -58,6 +59,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=catalog
 
+# БД для спецификаций
   mysql-mymarket:
     image: mysql:8.0.23
     tty: true
@@ -87,7 +89,7 @@ services:
     environment:
       PMA_USER: root
       PMA_PASSWORD: root
-      PMA_HOSTS: mysql-mymarket
+      PMA_HOSTS: mysql-catalog
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     ports:
