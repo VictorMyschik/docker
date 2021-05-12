@@ -44,7 +44,7 @@ services:
 
 # БД для каталога
   mysql-catalog:
-    image: mysql:8.0.23
+    image: mysql:8.0.0
     tty: true
     restart: always
     container_name: mysql-catalog
@@ -56,6 +56,7 @@ services:
       - './docker/mysql/catalog/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:ro'
       - './docker/mysql/catalog/database:/var/lib/mysql'
     environment:
+      - MYSQL_USER=mymarket
       - MYSQL_PASSWORD=root
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=catalog
