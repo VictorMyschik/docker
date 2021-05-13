@@ -34,7 +34,9 @@ services:
     links:
       - redis
       - phpmyadmin
+      - phpmyadmin-mymarket
       - mysql-catalog
+      - mysql-mymarket
     networks:
       - backend
     ports:
@@ -61,6 +63,24 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=catalog
 
+  mysql-mymarket:
+    image: mysql:8.0.0
+    tty: true
+    restart: always
+    container_name: mysql-mymarket
+    networks:
+      - backend
+    ports:
+      - '3307:3306'
+    volumes:
+      - './docker/mysql/mymarket/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:ro'
+      - './docker/mysql/mymarket/database:/var/lib/mysql'
+    environment:
+      - MYSQL_USER=mymarket
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mymarket
+
   phpmyadmin:
     image: library/phpmyadmin
     container_name: phpmyadmin
@@ -76,9 +96,28 @@ services:
       PMA_HOSTS: mysql-catalog
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
-      VIRTUAL_HOST: pma.mymarket.test
+      VIRTUAL_HOST: pma.catalog.test
     ports:
       - '8080:80'
+
+  phpmyadmin-mymarket:
+    image: library/phpmyadmin
+    container_name: phpmyadmin-mymarket
+    tty: true
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - mysql-catalog
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: root
+      PMA_HOSTS: mysql-mymarket
+      PMA_PORT: 3307
+      PMA_ARBITRARY: 1
+      VIRTUAL_HOST: pma.mymarket.test
+    ports:
+      - '8081:80'
 
   redis:
     image: bitnami/redis:latest
