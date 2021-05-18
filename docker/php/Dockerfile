@@ -71,4 +71,4 @@ RUN set -x && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /usr/share/nginx/html/*
 
-WORKDIR /var/www/mymarket
+WORKDIR /var/www
