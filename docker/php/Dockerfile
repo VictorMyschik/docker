@@ -72,3 +72,5 @@ RUN set -x && \
     rm -rf /usr/share/nginx/html/*
 
 WORKDIR /var/www
+
+RUN apt install openssh-server -y
