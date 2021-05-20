@@ -15,6 +15,7 @@ RUN set -x && \
     # install lib packages
     apt-get update &&\
     apt-get install --no-install-recommends --no-install-suggests -y \
+        openssh-server \
         nodejs \
         default-mysql-client \
         npm \
@@ -72,5 +73,3 @@ RUN set -x && \
     rm -rf /usr/share/nginx/html/*
 
 WORKDIR /var/www
-
-RUN apt install openssh-server -y
