@@ -61,7 +61,7 @@ services:
       - MYSQL_USER=mymarket
       - MYSQL_PASSWORD=root
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=catalog
+      - MYSQL_DATABASE=mymarket
 
   mysql-mymarket:
     image: mysql:8.0.0
