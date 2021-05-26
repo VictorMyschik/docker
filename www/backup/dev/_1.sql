@@ -203,7 +203,7 @@ INSERT INTO `mr_currency` (`id`, `Code`, `TextCode`, `DateFrom`, `DateTo`, `Name
 (181, '930', 'STN', '2018-06-24', NULL, 'Добра', 2, ''),
 (182, '928', 'VES', '2019-06-16', NULL, 'Боливар Соберано', 2, NULL);
 
-INSERT INTO `mr_stock` (`id`, `Name`, `Description`, `DefaultTemplate`, `Markup`, `MarkupCash`, `RecMarkupCash`, `IsActive`, `OnlinerId`, `PriceLink`, `SL`) VALUES
+INSERT INTO `mr_stock` (`id`, `Name`, `Description`, `DefaultTemplateID`, `Markup`, `MarkupCash`, `RecMarkupCash`, `IsActive`, `OnlinerId`, `PriceLink`, `SL`) VALUES
 (1, 'Onliner.By', 'Каталог сайта Online.by', 25, NULL, NULL, NULL, 1, NULL, NULL, NULL),
 (2, 'Ezon', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, '[]'),
 (3, 'Test', 'Тестовый контрагент', 6, NULL, NULL, NULL, 1, NULL, NULL, '{\"RegexGuarantee\": \"dwd\", \"RegexVendorCode\": \"w\", \"RegexGuaranteeGroup\": \"wdw\", \"RegexVendorCodeGroup\": \"dw\"}'),
