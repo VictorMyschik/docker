@@ -274,18 +274,19 @@ INSERT INTO `mr_stock_templates` (`id`, `StockID`, `Names`, `OnlinerId`, `StockU
 (75, 33, 'B', '', 'A', 0, '', NULL, 0, 160, 'C', '', NULL, NULL, 0, 1, '', NULL, '[]', 'D', 1),
 (76, 3, 'C', '', 'B', 0, '', NULL, 0, 27, 'H', '', 27, NULL, 0, 3, 'K', 'test', '{\"ExOrder\": \"есть\"}', 'I', 0);
 
-INSERT INTO `mr_autoload_schedule` (`id`, `StockID`, `Description`, `IsSpecification`, `IsSearch`, `IsProcess`, `PageNumber`, `IsActive`, `WriteDate`, `Period`, `StockTemplateID`, `IsAllParsing`, `LastWork`, `SL`) VALUES
-(9, 5, 'Нет авторизации', 1, 1, 1, 3, 0, '2021-05-17 17:44:57', 36, 7, 0, '2021-05-15 13:01:02', '{\"Url\": \"https://b2b.tradeicsbel.by/prices/download_price.php?token=dDU2QzV1a3dpbkNlZWtGZldWdmRHS2JxZitpaHcxUStidlVOTUxSZWVvcz0=&type=xls\", \"SourceKind\": 1}'),
-(10, 10, 'очень долго, но вроде работает', 1, 1, 1, 0, 1, '2021-05-18 18:25:21', 0, 36, 0, NULL, '{\"Url\": \"https://api.zoomos.by/b2b/supplier/%D0%A2%D1%80%D0%B8%D0%BE%D0%B2%D0%B8%D1%81%D1%82%20%D0%9E%D0%9E%D0%9E/pricelist/xls?hash=JnN1cHBsaWVyQ2xpZW50SWQ9MTIxNCZvcmRlckJ5PWNhdGVnb3J5Jm9yZGVyPWFzYyZzdGF0dXM9MSZzdGF0dXM9Ng%3D%3D\", \"SourceKind\": 1}'),
-(11, 13, 'левый какой то файл', 1, 1, 1, 0, 0, '2021-01-16 08:43:32', 0, 66, 0, NULL, '{\"Url\": \"https://export208.zoomos.by/link?url=https%3A%2F%2Fexport.zoomos.by%2Fdownload%2Fzms-cron-prices%2F1608607003818%2FStock+Status+v.3.xlsm\", \"SourceKind\": 1}'),
-(12, 14, 'Работает', 1, 1, 0, 0, 1, '2021-05-18 00:17:43', 360000, 65, 0, '2021-05-17 20:13:08', '{\"Url\": \"https://dl.dropboxusercontent.com/s/crm57m616pu3eom/price.xlsx\", \"SourceKind\": 1}'),
-(13, 16, 'Работает', 1, 1, 0, 0, 1, '2021-05-18 00:17:48', 0, 53, 0, NULL, '{\"Url\": \"http://technoby.com/price/priceTB.zip\", \"SourceKind\": 1}'),
-(14, 23, 'что то с ссылкой на файл, хрень скачивает', 1, 1, 1, 0, 0, '2021-01-16 08:37:35', 0, 63, 0, NULL, '{\"Url\": \"http://tools.by/info_base_inet_csv.php?unp=193448035\", \"SourceKind\": 1}'),
-(15, 24, 'тоже хрень качает', 1, 1, 1, 0, 0, '2021-01-16 08:43:43', 0, 64, 0, NULL, '{\"Url\": \"http://tools.by/info_base_inet_csv.php?unp=193448035\", \"SourceKind\": 1}'),
-(16, 25, 'ссылка битая или нет авторизации', 1, 1, 0, 0, 0, '2021-01-16 08:43:53', 0, 60, 0, NULL, '{\"Url\": \"https://export208.zoomos.by/link?url=https%3A%2F%2Fexport.zoomos.by%2Fdownload%2Fzms-cron-prices%2F1608655133282%2F%D0%9F%D0%B0%D1%82%D0%B8%D0%BE+%D0%BF%D1%80%D0%B0%D0%B9%D1%81-%D0%BB%D0%B8%D1%81%D1%82.xlsx\", \"SourceKind\": 1}'),
-(17, 32, NULL, 1, 1, 0, 0, 0, '2021-01-16 08:39:56', 0, NULL, 0, NULL, '{\"Url\": \"http://win7.by:7711/files/price_bn.xlsx\", \"SourceKind\": 1}'),
-(18, 33, 'кажется работает', 1, 1, 0, 0, 1, '2021-05-18 00:17:59', 0, 75, 0, NULL, '{\"Url\": \"http://win7.by:7711/files/price.xlsx\", \"SourceKind\": 1}'),
-(19, 8, '', 1, 1, 0, 0, 1, '2021-05-18 00:18:02', 3600000, 11, 0, '2021-05-17 17:36:06', '{\"Url\": \"https://ntt.by/index.php/component/jdownloads/send/2-pricebn/1-pricebn\", \"SourceKind\": 1}');
+INSERT INTO `mr_autoload_schedule` (`id`, `StockID`, `Description`, `IsSpecification`, `IsSearch`, `IsProcess`, `IsActive`, `WriteDate`, `Period`, `StockTemplateID`, `LastWork`, `SourceKind`, `SL`) VALUES
+(9, 5, '', 1, 1, 0, 1, '2021-05-25 21:00:03', 0, 7, '2021-05-24 21:00:24', 1, '{\"Url\": \"https://b2b.tradeicsbel.by/prices/download_price.php?token=aDMxZFNyRmtabFlWUGp3b1A5bE92QkF5cjNleVJpSjdtZHk0eWE3RzdNYz0=&type=xls\", \"IsAllParsing\": true}'),
+(10, 10, 'очень долго, но вроде работает', 1, 1, 1, 1, '2021-05-25 17:20:17', 7200, 36, '2021-05-26 22:20:38', 1, '{\"Url\": \"https://api.zoomos.by/b2b/supplier/%D0%A2%D1%80%D0%B8%D0%BE%D0%B2%D0%B8%D1%81%D1%82%20%D0%9E%D0%9E%D0%9E/pricelist/xls?hash=JnN1cHBsaWVyQ2xpZW50SWQ9MTIxNCZvcmRlckJ5PWNhdGVnb3J5Jm9yZGVyPWFzYyZzdGF0dXM9MSZzdGF0dXM9Ng%3D%3D\", \"UserEmailID\": 17}'),
+(11, 13, 'левый какой то файл', 1, 1, 1, 0, '2021-01-16 08:43:32', 0, 66, NULL, 1, '{\"Url\": \"https://export208.zoomos.by/link?url=https%3A%2F%2Fexport.zoomos.by%2Fdownload%2Fzms-cron-prices%2F1608607003818%2FStock+Status+v.3.xlsm\"}'),
+(12, 14, 'Работает', 1, 1, 0, 0, '2021-05-21 16:22:01', 360000, 65, '2021-05-17 20:13:08', 1, '{\"Url\": \"https://dl.dropboxusercontent.com/s/crm57m616pu3eom/price.xlsx\"}'),
+(13, 16, 'Работает', 1, 1, 0, 0, '2021-05-21 16:22:05', 0, 53, NULL, 1, '{\"Url\": \"http://technoby.com/price/priceTB.zip\"}'),
+(14, 23, 'что то с ссылкой на файл, хрень скачивает', 1, 1, 1, 0, '2021-01-16 08:37:35', 0, 63, NULL, 1, '{\"Url\": \"http://tools.by/info_base_inet_csv.php?unp=193448035\"}'),
+(15, 24, 'тоже хрень качает', 1, 1, 1, 0, '2021-01-16 08:43:43', 0, 64, NULL, 1, '{\"Url\": \"http://tools.by/info_base_inet_csv.php?unp=193448035\"}'),
+(16, 25, 'ссылка битая или нет авторизации', 1, 1, 0, 0, '2021-01-16 08:43:53', 0, 60, NULL, 1, '{\"Url\": \"https://export208.zoomos.by/link?url=https%3A%2F%2Fexport.zoomos.by%2Fdownload%2Fzms-cron-prices%2F1608655133282%2F%D0%9F%D0%B0%D1%82%D0%B8%D0%BE+%D0%BF%D1%80%D0%B0%D0%B9%D1%81-%D0%BB%D0%B8%D1%81%D1%82.xlsx\"}'),
+(17, 32, NULL, 1, 1, 0, 0, '2021-01-16 08:39:56', 0, NULL, NULL, 1, '{\"Url\": \"http://win7.by:7711/files/price_bn.xlsx\"}'),
+(18, 33, 'кажется работает', 1, 1, 1, 1, '2021-05-25 17:51:26', 7200, 75, '2021-05-26 21:20:05', 1, '{\"Url\": \"http://win7.by:7711/files/price.xlsx\", \"UserEmailID\": 17}'),
+(19, 8, '', 1, 1, 0, 0, '2021-05-21 16:22:12', 3600000, 11, '2021-05-17 17:36:06', 1, '{\"Url\": \"https://ntt.by/index.php/component/jdownloads/send/2-pricebn/1-pricebn\"}'),
+(20, 3, '', 1, 1, 0, 1, '2021-05-25 14:11:10', 72036, 76, '2021-05-22 22:21:20', 2, '{\"MailFrom\": \"belprointek@yandex.by\", \"UserEmailID\": 17, \"IsAllParsing\": true}');
 
 INSERT INTO `mr_manufacturer` (`id`, `name`, `address`) VALUES
 (12547, 'Неизвестен', NULL);
