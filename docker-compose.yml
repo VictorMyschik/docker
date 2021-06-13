@@ -67,6 +67,7 @@ services:
       - MYSQL_PASSWORD=root
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=mymarket
+      - VIRTUAL_HOST=pma.mymarket.test
 
   mysql-mymarket:
     image: mysql:8.0.0
