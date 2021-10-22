@@ -1,5 +1,5 @@
 ARG VERSION=8.0.0-fpm-1.18.0-nginx-buster
-FROM dwchiang/nginx-php-fpm:${VERSION}
+FROM fezzz/php-fpm
 
 LABEL maintainer="Ernest Chiang <me@ernestchiang.com>"
 
