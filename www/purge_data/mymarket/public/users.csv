@@ -1,0 +1,5 @@
+id,name,email,email_verified_at,password,remember_token,created_at,updated_at,DefaultOfficeID
+2,valuxin,valuxin@live.com,,$2y$10$K4geV7dV4ijLSQ8XBlnMpOBK9tWwSB6gjyTpVxX/oaoOtJziK8t.W,ui6obsgiOsKWEMIPGT3Kw7xnuxxZBDfro4B6v4dvN7j2WCXwcE1Bn2zibBSV,2020-09-03 13:45:27.000000,2021-05-31 02:24:28.000000,1
+100010,test,test@test.com,,$2y$10$NHi/LpkzIsZHGmN7JUpiJuIih87hmSR3GF9j1vVMh6Ptcwgf95g4m,,2021-05-13 15:57:51.000000,2021-05-13 15:57:51.000000,
+100011,gavana,bahmetovav@gmail.com,,$2y$10$po7hHJ8ClYPmvdsY3GsgGu7//zE2IiuhUtDN0abBSvFr8U2QB/90a,4ySsL5ytpmOY3ufoRPd6pRbhfMKzqExXzjnpzVX4gmw31Xbo8nDNKKYYfjDa,2021-05-26 10:20:21.000000,2021-05-31 02:24:28.000000,1
+1,Allximik,allximik50@gmail.com,,$2y$10$D5OUY12H1dgEaOFHJnpg..pjQ1s.IosdUMSVmzusuLKliR138hsHO,8qBlsMNgR6zp2Lf6SLrJqbBMkwTyGNLTKQsQbK6ByBwGCvReVfxAFXMB6MWI,2020-12-01 21:04:11.000000,2021-10-02 21:24:21.000000,1

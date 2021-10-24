@@ -14,7 +14,7 @@ services:
     tty: true
     environment:
       - VIRTUAL_HOST=mymarket.test
-    depends_on:
+    links:
       - php
       - redis
       - postgres
@@ -52,6 +52,7 @@ services:
   postgres:
     image: postgres:13.3
     restart: always
+    container_name: postgres
     networks:
       - backend
     environment:
@@ -63,21 +64,23 @@ services:
       - "5432:5432"
     volumes:
       - ./docker/postgres/mymarket:/var/lib/postgresql/data
-      - .:/docker-entrypoint-initdb.d
+      - ./docker/postgres/scripts:/docker-entrypoint-initdb.d
 
   pgadmin:
-    container_name: pgadmin_container
+    container_name: pgadmin
     image: dpage/pgadmin4:5.7
     environment:
       PGADMIN_DEFAULT_EMAIL: "allximik50@gmail.com"
       PGADMIN_DEFAULT_PASSWORD: "test"
       PGADMIN_CONFIG_SERVER_MODE: "False"
+      VIRTUAL_HOST: pgadmin.mymarket.test
     volumes:
       - ./docker/pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
     restart: unless-stopped
     networks:
+      - frontend
       - backend
   #mysql:
   #  image: mysql:8.0.0

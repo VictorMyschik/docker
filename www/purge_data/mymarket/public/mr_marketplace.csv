@@ -1,0 +1,2 @@
+id,OfficeID,Kind,MarketId,Login,Password,Description,IsActive,IsAutoUpdate,PriceProfile,SL,WriteDate
+1,1,1,19422,6dedf4e4243a9aa3265b,a36624f493b16cb23d026951430b44ca6b1c635a,Обновление списка товаров Onliner,1,0,0,"{""IsSaveHistory"":true,""IsDefault"":true}",2021-10-21 21:57:14.081585

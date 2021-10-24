@@ -38,6 +38,7 @@ RUN set -x && \
     apt-get install --no-install-recommends --no-install-suggests -y \
         # for composer
         git \
+        postgresql-client \
         && \
     # docker-php
     #   - Removed `mbstring` on alpine: https://stackoverflow.com/questions/59251008/docker-laravel-configure-error-package-requirements-oniguruma-were-not-m/59253249#59253249
