@@ -64,7 +64,6 @@ services:
       - "5432:5432"
     volumes:
       - ./docker/postgres/mymarket:/var/lib/postgresql/data
-      - ./docker/postgres/scripts:/docker-entrypoint-initdb.d
 
   pgadmin:
     container_name: pgadmin
@@ -81,6 +80,14 @@ services:
     restart: unless-stopped
     networks:
       - frontend
+      - backend
+
+  cron:
+    container_name: cron
+    build: ./docker/cron
+    volumes:
+      - ./logs/cron:/var/log
+    networks:
       - backend
   #mysql:
   #  image: mysql:8.0.0
