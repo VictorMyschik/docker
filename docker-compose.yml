@@ -82,13 +82,13 @@ services:
       - frontend
       - backend
 
-  cron:
-    container_name: cron
-    build: ./docker/cron
-    volumes:
-      - ./logs/cron:/var/log
-    networks:
-      - backend
+  #cron:
+  #  container_name: cron
+  #  build: ./docker/cron
+  #  volumes:
+  #    - ./logs/cron:/var/log
+  #  networks:
+  #    - backend
   #mysql:
   #  image: mysql:8.0.0
   #  tty: true
