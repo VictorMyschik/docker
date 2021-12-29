@@ -8,7 +8,7 @@ cd ../../
 # Клонирование репозитория
 git clone --recurse-submodules https://github.com/VictorMyschik/mymarket.git www/mymarket
 
-# Копирование файйла настроек для Laravel
+# Копирование файла настроек для Laravel
 cp www/.env www/mymarket/
 
 # Создание контейнеров
