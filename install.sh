@@ -6,7 +6,7 @@ docker-compose up -d
 cd ../../
 
 # Клонирование репозитория
-git clone --recurse-submodules https://github.com/VictorMyschik/mymarket.git www/mymarket
+git clone --recurse-submodules git@github.com:VictorMyschik/mymarket.git www/mymarket
 
 # Копирование файла настроек для Laravel
 cp www/.env www/mymarket/

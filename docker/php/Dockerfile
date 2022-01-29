@@ -1,4 +1,4 @@
-ARG VERSION=8.0.0-fpm-1.18.0-nginx-buster
+ARG VERSION=8.1-fpm-1.18.0-nginx-buster
 FROM fezzz/php-fpm
 
 LABEL maintainer="Ernest Chiang <me@ernestchiang.com>"
