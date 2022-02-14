@@ -1,9 +1,7 @@
-ARG VERSION=8.1-fpm-1.18.0-nginx-buster
 FROM php:8.1.1-fpm
 
 LABEL maintainer="Ernest Chiang <me@ernestchiang.com>"
 
-ARG VERSION_PHP_FPM_MINOR
 ARG VERSION_OS
 ENV VERSION_OS=${VERSION_OS}
 
@@ -13,6 +11,13 @@ RUN pecl install -o -f redis \
 
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
+
+RUN apt-get update
+
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
 
 RUN set -x && \
     # install lib packages
@@ -34,10 +39,8 @@ RUN set -x && \
         libpng-dev \
         libjpeg62-turbo-dev \
         && \
-
     apt-get install --no-install-recommends --no-install-suggests -y \
         # for composer
-        git \
         postgresql-client \
         mc \
         && \
@@ -46,16 +49,11 @@ RUN set -x && \
     #     Due to this error: `configure: error: Package requirements (oniguruma) were not met: Package 'oniguruma', required by 'virtual:world', not found`
     # for gd
     #   - ref: https://github.com/docker-library/php/pull/910#issuecomment-559383597
-    if [ $(echo "${VERSION_PHP_FPM_MINOR} >= 7.4" | bc) -eq 1 ]; then \
-        docker-php-ext-configure gd --with-freetype --with-jpeg ; \
-    else \
-        docker-php-ext-configure gd --with-freetype --with-jpeg ; \
-    fi && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg ; \
     docker-php-ext-install -j$(nproc) \
         bcmath \
-        mysqli \
         pdo \
-        pdo_mysql \
+        pdo_pgsql \
         bz2 \
         gd \
         exif \
@@ -77,4 +75,4 @@ RUN set -x && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /usr/share/nginx/html/*
 
-WORKDIR /var/www
+WORKDIR /var/www/mymarket
