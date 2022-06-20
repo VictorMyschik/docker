@@ -9,7 +9,7 @@ networks:
 services:
   nginx:
     build: ./docker/nginx
-    container_name: nginx
+    container_name: mr-nginx
     restart: always
     tty: true
     environment:
@@ -30,7 +30,7 @@ services:
     build: ./docker/php
     restart: always
     tty: true
-    container_name: php
+    container_name: mr-php
     links:
       - redis
       - postgres
@@ -47,12 +47,10 @@ services:
       - ./www:/var/www
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
 
-# БД для каталога
-
   postgres:
     image: postgres:13.3
     restart: always
-    container_name: postgres
+    container_name: mr-postgres
     networks:
       - backend
     environment:
@@ -64,67 +62,6 @@ services:
       - "5432:5432"
     volumes:
       - ./docker/postgres/mymarket:/var/lib/postgresql/data
-
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:5.7
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "allximik50@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "test"
-      PGADMIN_CONFIG_SERVER_MODE: "False"
-      VIRTUAL_HOST: pgadmin.mymarket.test
-    volumes:
-      - ./docker/pgadmin:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    restart: unless-stopped
-    networks:
-      - frontend
-      - backend
-
-  #cron:
-  #  container_name: cron
-  #  build: ./docker/cron
-  #  volumes:
-  #    - ./logs/cron:/var/log
-  #  networks:
-  #    - backend
-  #mysql:
-  #  image: mysql:8.0.0
-  #  tty: true
-  #  restart: always
-  #  container_name: mysql
-  #  networks:
-  #    - backend
-  #  ports:
-  #    - '3307:3306'
-  #  volumes:
-  #    - './docker/mysql/mymarket/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:ro'
-  #    - './docker/mysql/mymarket/database:/var/lib/mysql'
-  #  environment:
-  #    - MYSQL_USER=mymarket
-  #    - MYSQL_PASSWORD=root
-  #    - MYSQL_ROOT_PASSWORD=root
-  #    - MYSQL_DATABASE=mymarket
-
-  #phpmyadmin:
-  #  image: library/phpmyadmin
-  #  container_name: phpmyadmin
-  #  tty: true
-  #  networks:
-  #    - frontend
-  #    - backend
-  #  depends_on:
-  #    - mysql
-  #  environment:
-  #    PMA_USER: root
-  #    PMA_PASSWORD: root
-  #    PMA_HOSTS: mysql
-  #    PMA_PORT: 3306
-  #    PMA_ARBITRARY: 1
-  #    VIRTUAL_HOST: pma.catalog.test
-  #  ports:
-  #    - '8080:80'
 
   redis:
     image: bitnami/redis:latest
@@ -140,14 +77,91 @@ services:
     ports:
       - '6379:6379'
 
- #jenkins:
- #  image: "jenkins/jenkins:lts"
- #  container_name: "jenkins_lts"
- #  volumes:
- #    - ./jenkins_home/:/var/jenkins_home
- #    - /var/run/docker.sock:/var/run/docker.sock:rw
- #    - /usr/bin/docker:/usr/bin/docker
- #  network_mode: host
- #  ports:
- #    - 8080:8080
- #  restart: always
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: mr-rabbitmq
+    volumes:
+      - ./docker/rabbitmq/data/:/var/lib/rabbitmq/
+    env_file:
+      - docker/rabbitmq/messagequeue.env
+    networks:
+      - backend
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+
+    #region reserve
+    #pgadmin:
+    #  container_name: pgadmin
+    #  image: dpage/pgadmin4:5.7
+    #  environment:
+    #    PGADMIN_DEFAULT_EMAIL: "allximik50@gmail.com"
+    #    PGADMIN_DEFAULT_PASSWORD: "test"
+    #    PGADMIN_CONFIG_SERVER_MODE: "False"
+    #    VIRTUAL_HOST: pgadmin.mymarket.test
+    #  volumes:
+    #    - ./docker/pgadmin:/var/lib/pgadmin
+    #  ports:
+    #    - "5050:80"
+    #  restart: unless-stopped
+    #  networks:
+    #    - frontend
+    #    - backend
+
+    #cron:
+    #  container_name: cron
+    #  build: ./docker/cron
+    #  volumes:
+    #    - ./logs/cron:/var/log
+    #  networks:
+    #    - backend
+    #mysql:
+    #  image: mysql:8.0.0
+    #  tty: true
+    #  restart: always
+    #  container_name: mysql
+    #  networks:
+    #    - backend
+    #  ports:
+    #    - '3307:3306'
+    #  volumes:
+    #    - './docker/mysql/mymarket/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:ro'
+    #    - './docker/mysql/mymarket/database:/var/lib/mysql'
+    #  environment:
+    #    - MYSQL_USER=mymarket
+    #    - MYSQL_PASSWORD=root
+    #    - MYSQL_ROOT_PASSWORD=root
+    #    - MYSQL_DATABASE=mymarket
+
+    #phpmyadmin:
+    #  image: library/phpmyadmin
+    #  container_name: phpmyadmin
+    #  tty: true
+    #  networks:
+    #    - frontend
+    #    - backend
+    #  depends_on:
+    #    - mysql
+    #  environment:
+    #    PMA_USER: root
+    #    PMA_PASSWORD: root
+    #    PMA_HOSTS: mysql
+    #    PMA_PORT: 3306
+    #    PMA_ARBITRARY: 1
+    #    VIRTUAL_HOST: pma.catalog.test
+    #  ports:
+    #    - '8080:80'
+
+  #jenkins:
+  #  image: "jenkins/jenkins:lts"
+  #  container_name: "jenkins_lts"
+  #  volumes:
+  #    - ./jenkins_home/:/var/jenkins_home
+  #    - /var/run/docker.sock:/var/run/docker.sock:rw
+  #    - /usr/bin/docker:/usr/bin/docker
+  #  network_mode: host
+  #  ports:
+  #    - 8080:8080
+  #  restart: always
+  #endregion
