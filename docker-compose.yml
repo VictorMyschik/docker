@@ -66,10 +66,7 @@ services:
   redis:
     image: bitnami/redis:latest
     restart: always
-    tty: true
     container_name: redis
-    volumes:
-      - ./docker/redis:/bitnami/redis/data
     networks:
       - backend
     environment:
